@@ -5,20 +5,18 @@ namespace HangmanAssignment;
 
 public partial class HangmanGamePage : ContentPage
 {
-    public void MainPage()
+    public HangmanGamePage()
     {
         InitializeComponent();
         Letters.AddRange("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         BindingContext = this;
         PickWord();
-        CalculateWord(answer, guessed);
-        UpdateGameStatus();
     }
 
     // Fields
     #region Fields
 
-    List<string> words = new List<string>()
+    private List<string> words = new List<string>()
      {
         "python",
         "javascript",
@@ -34,53 +32,17 @@ public partial class HangmanGamePage : ContentPage
         "hotreload",
         "snippets"
      };
-    string answer = "";
-    private string spotlight = "";
-    List<char> guessed = new List<char>();
+
+    private string answer = "";
+    private List<char> guessed = new List<char>();
     private List<char> letters = new List<char>();
-    private string message = "";
-    int errorsCount = 0;
-    int maximumErrors = 6;
+    private int errorsCount = 0;
+    private int maximumErrors = 6;
     private string gameStatus = "";
     private string currentImage = "";
-    private bool resetButtonEnabled = false;
-
+    private string spotlight = "";
 
     #endregion
-
-    // UI Properties
-    #region UI Properties
-
-    public string Spotlight
-    {
-        get => spotlight;
-        set
-        {
-            spotlight = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public List<char> Letters
-    {
-        get => letters;
-        set
-        {
-            letters = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string Message
-    {
-        get => message;
-        set
-        {
-            message = value;
-            OnPropertyChanged();
-        }
-    }
-
     public string GameStatus
     {
         get => gameStatus;
@@ -100,15 +62,40 @@ public partial class HangmanGamePage : ContentPage
             OnPropertyChanged();
         }
     }
+    // UI Properties
+    #region UI Properties
+
+    public string Spotlight
+    {
+        get => spotlight;
+        set
+        {
+            spotlight = value;
+            OnPropertyChanged();
+            OnPropertyChanged();
+        }
+    }
+
+    public List<char> Letters
+    {
+        get => letters;
+        set
+        {
+            letters = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Message
+    {
+        get;
+        private set;
+    }
 
     public bool ResetButtonEnabled
     {
-        get => resetButtonEnabled;
-        set
-        {
-            resetButtonEnabled = value;
-            OnPropertyChanged();
-        }
+        get;
+        private set;
     }
 
     #endregion
@@ -125,9 +112,9 @@ public partial class HangmanGamePage : ContentPage
         Debug.WriteLine(answer);
     }
 
-    private void CalculateWord(string _answer, List<char> guessed)
+    private void CalculateWord()
     {
-        var temp = _answer
+        var temp = answer
             .Select(x => (guessed.IndexOf(x) >= 0 ? x : '_'))
             .ToArray();
 
@@ -140,15 +127,15 @@ public partial class HangmanGamePage : ContentPage
         {
             guessed.Add(letter);
         }
+
         if (answer.Contains(letter))
         {
-            CalculateWord(answer, guessed);
-            SemanticScreenReader.Announce($"{letter} exists!. {ReadSpotlight()}");
+            CalculateWord();
             CheckIfPlayerWins();
+            OnPropertyChanged();
         }
         else
         {
-            SemanticScreenReader.Announce($"{letter} does not exist. {ReadSpotlight()}");
             errorsCount++;
             UpdateGameStatus();
             if (errorsCount >= maximumErrors)
@@ -176,14 +163,9 @@ public partial class HangmanGamePage : ContentPage
         }
     }
 
-    private string ReadSpotlight()
-    {
-        return Spotlight.Replace("_", "[, line]");
-    }
-
     private void EnableOrDisableButtons(bool enabled)
     {
-        ResetButtonEnabled = !enabled;
+        ResetButtonEnabled = enabled;
         foreach (var children in lettersContainer.Children)
         {
             var btn = children as Button;
@@ -213,7 +195,7 @@ public partial class HangmanGamePage : ContentPage
         errorsCount = 0;
         UpdateGameStatus();
         PickWord();
-        CalculateWord(answer, guessed);
+        CalculateWord();
         EnableOrDisableButtons(true);
     }
 }

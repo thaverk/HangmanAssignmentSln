@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HangmanAssignment.HangmanGamePage"
-             Title="MAUI Hangman Assignment">
+             Title="MAUI Hangman Assignment" BackgroundColor="White">
     <Grid RowDefinitions=".6*,.4*"
       Padding="15">
         <VerticalStackLayout Spacing="10">
@@ -13,9 +13,9 @@
             FontSize="Large" />
             <Image HeightRequest="250" 
                SemanticProperties.Description="hang man"
-               Source="{Binding CurrentImage}" />
+               Source="{Binding CurrentImage}"  Margin="0,-50,0,0" />
             <Label
-            FontSize="40"
+            FontSize="40" TextColor="Black"
             HorizontalOptions="Center"
             Text="{Binding Spotlight}"
             VerticalOptions="Center" />
@@ -26,8 +26,9 @@
             <Button
             x:Name="reset"
             HorizontalOptions="Center"
-            Text="Reset"
-            IsEnabled="{Binding ResetButtonEnabled}"
+            Text="Reset" 
+             Margin="0,-50,0,0"
+                IsEnabled="{Binding ResetButtonEnabled}"
             WidthRequest="100" 
             Clicked="reset_Clicked" />
         </VerticalStackLayout>
@@ -35,6 +36,7 @@
         <FlexLayout 
         x:Name="lettersContainer"
         Grid.Row="1"
+       Margin="0,-60,0,0"
         BindableLayout.ItemsSource="{Binding Letters}"
         JustifyContent="SpaceEvenly"
         Wrap="Wrap">
@@ -46,7 +48,17 @@
                     HeightRequest="50"
                     Text="{Binding .}"
                     SemanticProperties.Description="{Binding .}"
-                    WidthRequest="50" />
+                    WidthRequest="50"
+                        Margin="0,5,5,5" BackgroundColor="Cyan">
+                        
+                        <Button.Shadow>
+                            <Shadow Brush="Black"
+                Offset="20,20"
+                Radius="40"
+                Opacity="0.8" />
+                        </Button.Shadow>
+
+                    </Button>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
 

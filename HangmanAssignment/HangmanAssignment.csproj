@@ -57,14 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\hang1.png" />
-	  <None Remove="Resources\Images\hang2.png" />
-	  <None Remove="Resources\Images\hang3.png" />
-	  <None Remove="Resources\Images\hang4.png" />
-	  <None Remove="Resources\Images\hang5.png" />
-	  <None Remove="Resources\Images\hang6.png" />
-	  <None Remove="Resources\Images\hang7.png" />
 	  <None Remove="Resources\Images\hang8.png" />
+	  <None Remove="Resources\Images\img0.png" />
+	  <None Remove="Resources\Images\img1.png" />
+	  <None Remove="Resources\Images\img2.png" />
+	  <None Remove="Resources\Images\img3.png" />
+	  <None Remove="Resources\Images\img4.png" />
+	  <None Remove="Resources\Images\img5.png" />
+	  <None Remove="Resources\Images\img6.png" />
 	</ItemGroup>
 
 	<ItemGroup>
